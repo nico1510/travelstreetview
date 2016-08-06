@@ -24,9 +24,25 @@ app.get('/list', function (req, res) {
         if (err) {
             res.json({error: err});
         } else {
-            res.json(files.map(function (file) {
-                return req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file));
-            }));
+            var gpsPromiseList = files.map(function (file) {
+                return new Promise(function (resolve, reject) {
+                    new ExifImage({image: file}, function (error, exifData) {
+                        if (error)
+                            reject(error);
+                        else {
+                            resolve({
+                                img: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
+                                gps: exifData.gps
+                            });
+                        }
+                    });
+                });
+            });
+            Promise.all(gpsPromiseList).then(function (result) {
+                res.json(result);
+            }).catch(function (err) {
+                res.json({error: err.message})
+            });
         }
     });
 });
