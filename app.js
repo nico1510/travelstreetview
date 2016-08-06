@@ -3,6 +3,7 @@ const app = express();
 const ExifImage = require('exif').ExifImage;
 const path = require('path');
 const glob = require("glob");
+const moment = require('moment');
 
 const staticPath = 'public';
 const picsFolder = '/pics';
@@ -15,7 +16,7 @@ function convertDMSToDD(degrees, minutes, seconds, direction) {
     var dd = degrees + minutes/60 + seconds/(60*60);
     if (direction == "S" || direction == "W") {
         dd = dd * -1;
-    } // Don't do anything for N or E
+    }
     return dd;
 }
 
@@ -50,7 +51,7 @@ app.get('/list', function (req, res) {
                             resolve({
                                 img: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
                                 gps: extractCoordinates(exifData.gps),
-                                timestamp: exifData.GPSDateStamp
+                                timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
                             });
                         }
                     });
