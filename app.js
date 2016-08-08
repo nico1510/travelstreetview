@@ -8,7 +8,18 @@ const moment = require('moment');
 const staticPath = 'public';
 const picsFolder = '/pics';
 const picsDir = path.join(staticPath, picsFolder);
+const config = require('./config')(process.env.NODE_ENV);
+const sizeOf = require('image-size');
 
+const allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+};
+
+app.use(allowCrossDomain);
 app.use(express.static(staticPath));
 
 
@@ -28,7 +39,7 @@ function extractCoordinates(gps) {
     return {lat, long, gmaps, streetview};
 }
 
-app.get('/pos/:pic', function (req, res) {
+app.get(config.posEndpoint + '/:pic', function (req, res) {
     new ExifImage({image: path.join(__dirname, picsDir, req.params.pic)}, function (error, exifData) {
         if (error)
             res.json({error: error.message});
@@ -37,7 +48,7 @@ app.get('/pos/:pic', function (req, res) {
     });
 });
 
-app.get('/list', function (req, res) {
+app.get(config.listEndpoint, function (req, res) {
     glob(path.join(__dirname, picsDir, '*.jpg'), function (err, files) {
         if (err) {
             res.json({error: err});
@@ -48,26 +59,31 @@ app.get('/list', function (req, res) {
                         if (error)
                             reject(error);
                         else {
-                            resolve({
-                                img: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
-                                gps: extractCoordinates(exifData.gps),
-                                timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
+                            sizeOf(file, function (err, dimensions) {
+                                if(err) {
+                                    reject(err);
+                                } else {
+                                    resolve({
+                                        src: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
+                                        gps: extractCoordinates(exifData.gps),
+                                        dimensions,
+                                        timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
+                                    });
+                                }
                             });
                         }
                     });
                 });
             });
-            Promise.all(gpsPromiseList).then(function (result) {
-                res.json(result);
-            }).catch(function (err) {
+            Promise.all(gpsPromiseList).then(res.json.bind(res)).catch(function (err) {
                 res.json({error: err.message})
             });
         }
     });
 });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+app.listen(port=config.ports.http, function () {
+    console.log(`App listening on port ${port}!`);
 });
 
 
