@@ -33,7 +33,7 @@ export default class GoogleMapsComponent extends Component {
                     }
 
                     containerElement={
-                        <div {...this.props} style={{ height: `100%` }} />
+                        <div style={{ height: `100%` }} />
                     }
 
                     googleMapElement={
@@ -42,16 +42,13 @@ export default class GoogleMapsComponent extends Component {
                             if (!googleMap) {
                                return;
                             }
-
                             let bounds = new google.maps.LatLngBounds();
                             this.props.list.forEach(function(item){
-                               bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
+                                bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
                             });
                             googleMap.props.map.setCenter(bounds.getCenter());
                             googleMap.props.map.fitBounds(bounds);
                         }}
-                        defaultZoom={3}
-                        defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
                         onClick={this.handleMapClick.bind(this)} >
                         {this.props.list.map((item, index) => {
                           return (
@@ -60,7 +57,7 @@ export default class GoogleMapsComponent extends Component {
                           );
                         })}
                         </GoogleMap>
-    }/>
+                    }/>
             </div>
         )
             ;
