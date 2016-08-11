@@ -33,10 +33,10 @@ function convertDMSToDD(degrees, minutes, seconds, direction) {
 
 function extractCoordinates(gps) {
     const lat = convertDMSToDD(...gps.GPSLatitude, gps.GPSLatitudeRef);
-    const long = convertDMSToDD(...gps.GPSLongitude, gps.GPSLongitudeRef);
-    const gmaps = `http://maps.google.com/maps?q=${lat},${long}`;
-    const streetview = `http://maps.google.com/maps?q=&layer=c&cbll=${lat},${long}`;
-    return {lat, long, gmaps, streetview};
+    const lng = convertDMSToDD(...gps.GPSLongitude, gps.GPSLongitudeRef);
+    const gmaps = `http://maps.google.com/maps?q=${lat},${lng}`;
+    const streetview = `http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}`;
+    return {lat, lng, gmaps, streetview};
 }
 
 app.get(config.posEndpoint + '/:pic', function (req, res) {

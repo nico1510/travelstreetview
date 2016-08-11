@@ -43,8 +43,8 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     <h2>Welcome to React</h2>
                 </div>
-                <ImagePanelComponent list={this.state.list}/>
-                <GoogleMapsComponent />
+                <ImagePanelComponent list={this.state.list} />
+                <GoogleMapsComponent list={this.state.list} />
             </div>
         );
     }
