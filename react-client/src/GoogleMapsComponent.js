@@ -21,7 +21,7 @@ export default class GoogleMapsComponent extends Component {
         let key = 0;
 
         return (
-            <div style={{height: "500px"}}>
+            <div className='G-maps-container'>
                 <ScriptjsLoader
                     hostname={"maps.googleapis.com"}
                     pathname={"/maps/api/js"}

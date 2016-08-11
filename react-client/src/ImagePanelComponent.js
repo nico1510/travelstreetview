@@ -6,7 +6,7 @@ class ImagePanelComponent extends Component {
     render() {
         let key = 0;
         return (
-            <div className="imagePanel">
+            <div>
                 {!this.props.list.length ? 'Loading...' : this.props.list.map((item) => {
                     return <img src={item.src} alt='img placeholder' style={calculateAspectRatioFit(item.dimensions.width, item.dimensions.height, 250, 200)} key={key++}/>;
                 })}

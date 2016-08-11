@@ -39,12 +39,11 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h2>Welcome to React</h2>
-                </div>
-                <ImagePanelComponent list={this.state.list} />
                 <GoogleMapsComponent list={this.state.list} />
+                <div className="App-footer">
+                    <img src={logo} className="App-logo" alt="logo"/>
+                    <ImagePanelComponent list={this.state.list} />
+                </div>
             </div>
         );
     }
