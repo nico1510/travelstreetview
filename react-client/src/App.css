@@ -8,7 +8,6 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-  float: left;
 }
 
 .App-footer {
@@ -34,4 +33,18 @@
 
 #root {
   height: 100%;
+}
+
+.image-panel {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100vw;
+  height: 100%;
+  overflow: scroll;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-item {
+  margin: 5px;
 }

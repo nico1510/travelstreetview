@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
-import logo from './logo.svg';
 import './App.css';
 import serverConfigModule from '../../config'
 import {default as ImagePanelComponent} from './ImagePanelComponent';
@@ -41,7 +40,6 @@ class App extends Component {
             <div className="App">
                 <GoogleMapsComponent list={this.state.list} />
                 <div className="App-footer">
-                    <img src={logo} className="App-logo" alt="logo"/>
                     <ImagePanelComponent list={this.state.list} />
                 </div>
             </div>

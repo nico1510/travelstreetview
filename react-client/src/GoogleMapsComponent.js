@@ -27,7 +27,6 @@ export default class GoogleMapsComponent extends Component {
     }
 
     panToMarkers(googleMap) {
-        console.log('EY OOOOOOOOOOOOOO');
         // panToMarkers should only be invoked on initial render
         if(this.state.initialRender) {
             let bounds = new google.maps.LatLngBounds();
