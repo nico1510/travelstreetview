@@ -46,8 +46,7 @@ export default class GoogleMapsComponent extends Component {
                             this.props.list.forEach(function(item){
                                 bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
                             });
-                            googleMap.props.map.setCenter(bounds.getCenter());
-                            googleMap.props.map.fitBounds(bounds);
+                            googleMap.fitBounds(bounds);
                         }}
                         onClick={this.handleMapClick.bind(this)} >
                         {this.props.list.map((item, index) => {
