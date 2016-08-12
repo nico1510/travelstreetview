@@ -9,6 +9,15 @@ import {GoogleMap, Marker} from "react-google-maps";
 
 export default class GoogleMapsComponent extends Component {
 
+    constructor(props) {
+        super(props);
+        this.handleMapClick = this.handleMapClick.bind(this);
+        this.handleMarkerRightclick = this.handleMarkerRightclick.bind(this);
+        this.panToMarkers = this.panToMarkers.bind(this);
+
+        this.state = {initialRender: true};
+    }
+
     handleMapClick(event) {
         console.log('The map was clicked');
     }
@@ -18,12 +27,27 @@ export default class GoogleMapsComponent extends Component {
     }
 
     panToMarkers(googleMap) {
-        let bounds = new google.maps.LatLngBounds();
-        this.props.list.forEach(function(item){
-            bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
-        });
-        googleMap.fitBounds(bounds);
+        console.log('EY OOOOOOOOOOOOOO');
+        // panToMarkers should only be invoked on initial render
+        if(this.state.initialRender) {
+            let bounds = new google.maps.LatLngBounds();
+            this.props.list.forEach(function (item) {
+                bounds.extend(new google.maps.LatLng(item.gps.lat, item.gps.lng));
+            });
+            googleMap.fitBounds(bounds);
+            this.setState({initialRender: false});
+        }
     }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        // When initialRender is flipped to true the component should not re-render because the view is not affected by this state change
+        if(this.state.initialRender && !nextState.initialRender) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     render() {
         let key = 0;
@@ -52,7 +76,7 @@ export default class GoogleMapsComponent extends Component {
                             }
                             this.panToMarkers(googleMap);
                         }}
-                        onClick={this.handleMapClick.bind(this)} >
+                        onClick={this.handleMapClick} >
                         {this.props.list.map((item, index) => {
                           return (
                             <Marker position={item.gps} key={key++} onRightclick={this.handleMarkerRightclick.bind(this, index)}
@@ -62,7 +86,6 @@ export default class GoogleMapsComponent extends Component {
                         </GoogleMap>
                     }/>
             </div>
-        )
-            ;
+        );
     }
 }
