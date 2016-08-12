@@ -17,6 +17,14 @@ export default class GoogleMapsComponent extends Component {
         console.log('I was right clicked');
     }
 
+    panToMarkers(googleMap) {
+        let bounds = new google.maps.LatLngBounds();
+        this.props.list.forEach(function(item){
+            bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
+        });
+        googleMap.fitBounds(bounds);
+    }
+
     render() {
         let key = 0;
 
@@ -42,11 +50,7 @@ export default class GoogleMapsComponent extends Component {
                             if (!googleMap) {
                                return;
                             }
-                            let bounds = new google.maps.LatLngBounds();
-                            this.props.list.forEach(function(item){
-                                bounds.extend(new google.maps.LatLng (item.gps.lat,item.gps.lng));
-                            });
-                            googleMap.fitBounds(bounds);
+                            this.panToMarkers(googleMap);
                         }}
                         onClick={this.handleMapClick.bind(this)} >
                         {this.props.list.map((item, index) => {
