@@ -4,6 +4,9 @@ import './App.css';
 import serverConfigModule from '../../config'
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 const config = serverConfigModule(process.env.NODE_ENV);
 
@@ -37,12 +40,14 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <GoogleMapsComponent list={this.state.list} />
-                <div className="App-footer">
-                    <ImagePanelComponent list={this.state.list} />
+            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+                <div className="App">
+                    <GoogleMapsComponent list={this.state.list} />
+                    <div className="App-footer">
+                        <ImagePanelComponent list={this.state.list} />
+                    </div>
                 </div>
-            </div>
+            </MuiThemeProvider>
         );
     }
 }

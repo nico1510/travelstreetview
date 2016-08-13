@@ -9,7 +9,7 @@ class ImagePanelComponent extends Component {
             <div className="image-panel">
                 {!this.props.list.length ? 'Loading...' : this.props.list.map((item) => {
                     return (
-                        <div className='image-item' style={{ 'background-image': `url('${item.src}')`}} key={key++}>
+                        <div className='image-item' style={{ backgroundImage: `url('${item.src}')`}} key={key++}>
                         </div>
                     )
                 })}
