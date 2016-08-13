@@ -9,8 +9,7 @@ class ImagePanelComponent extends Component {
             <div className="image-panel">
                 {!this.props.list.length ? 'Loading...' : this.props.list.map((item) => {
                     return (
-                        <div className="image-item" key={key++}>
-                            <img src={item.src} style={calculateAspectRatioFit(item.dimensions.width, item.dimensions.height, 250, 200)} />
+                        <div className='image-item' style={{ 'background-image': `url('${item.src}')`}} key={key++}>
                         </div>
                     )
                 })}
@@ -19,9 +18,5 @@ class ImagePanelComponent extends Component {
     }
 }
 
-function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
-    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-    return {width: srcWidth * ratio, height: srcHeight * ratio};
-}
 
 export default ImagePanelComponent;

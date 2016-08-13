@@ -12,13 +12,13 @@
 
 .App-footer {
   background-color: #222;
-  height: 25%;
+  height: 30%;
   padding: 20px;
   color: white;
 }
 
 .G-maps-container {
-  height: 75%;
+  height: 70%;
   width: 50%;
 }
 
@@ -41,10 +41,16 @@
   width: 100vw;
   height: 100%;
   overflow: scroll;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
 }
 
 .image-item {
+  background-size:cover;
+  background-repeat:no-repeat;
+  width:250px !important;
+  border-radius: 50px;
   margin: 5px;
+  min-width: 250px;
+  height:250px;
 }
