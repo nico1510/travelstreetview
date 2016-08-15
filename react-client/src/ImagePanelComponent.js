@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-
+import ImageItemComponent from './ImageItemComponent';
 
 class ImagePanelComponent extends Component {
 
@@ -11,8 +11,7 @@ class ImagePanelComponent extends Component {
             <div className='image-panel' style={{backgroundColor: darkBaseTheme.palette.canvasColor}}>
                 {!this.props.list.length ? 'Loading...' : this.props.list.map((item) => {
                     return (
-                        <div className='image-item' style={{ backgroundImage: `url('${item.src}')`}} key={key++}>
-                        </div>
+                        <ImageItemComponent item={item} key={key++} />
                     )
                 })}
             </div>

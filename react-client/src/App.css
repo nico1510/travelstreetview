@@ -46,7 +46,7 @@
 .image-item {
   background-size:cover;
   background-repeat:no-repeat;
-  width:250px !important;
+  width:250px;
   border-radius: 50px;
   margin: 5px;
   min-width: 250px;

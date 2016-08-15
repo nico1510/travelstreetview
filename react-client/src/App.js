@@ -7,6 +7,7 @@ import {default as GoogleMapsComponent} from './GoogleMapsComponent';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 const config = serverConfigModule(process.env.NODE_ENV);
 
@@ -14,6 +15,10 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {list: []};
+
+        // Needed for onTouchTap
+        // http://stackoverflow.com/a/34015469/988941
+        injectTapEventPlugin();
     }
 
     componentDidMount() {
