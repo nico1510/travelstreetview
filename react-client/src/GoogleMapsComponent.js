@@ -5,6 +5,7 @@
 import {default as React, Component} from "react";
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import {GoogleMap, Marker} from "react-google-maps";
+import {default as MarkerClusterer} from 'react-google-maps/lib/addons/MarkerClusterer'
 
 
 export default class GoogleMapsComponent extends Component {
@@ -28,7 +29,7 @@ export default class GoogleMapsComponent extends Component {
 
     panToMarkers(googleMap) {
         // panToMarkers should only be invoked on initial render
-        if(this.state.initialRender) {
+        if (this.state.initialRender) {
             let bounds = new google.maps.LatLngBounds();
             this.props.list.forEach(function (item) {
                 bounds.extend(new google.maps.LatLng(item.gps.lat, item.gps.lng));
@@ -40,7 +41,7 @@ export default class GoogleMapsComponent extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         // When initialRender is flipped to true the component should not re-render because the view is not affected by this state change
-        if(this.state.initialRender && !nextState.initialRender) {
+        if (this.state.initialRender && !nextState.initialRender) {
             return false;
         } else {
             return true;
@@ -76,12 +77,19 @@ export default class GoogleMapsComponent extends Component {
                             this.panToMarkers(googleMap);
                         }}
                         onClick={this.handleMapClick} >
-                        {this.props.list.map((item, index) => {
-                          return (
-                            <Marker position={item.gps} key={key++} onRightclick={this.handleMarkerRightclick.bind(this, index)}
-                            />
-                          );
-                        })}
+
+                        <MarkerClusterer
+                          averageCenter
+                          enableRetinaIcons
+                          gridSize={60}>
+
+                            {this.props.list.map((item, index) => {
+                              return (
+                                <Marker position={item.gps} key={key++} onRightclick={this.handleMarkerRightclick.bind(this, index)}
+                                />
+                              );
+                            })}
+                        </MarkerClusterer>
                         </GoogleMap>
                     }/>
             </div>

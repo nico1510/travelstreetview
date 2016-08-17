@@ -14,11 +14,25 @@ const config = serverConfigModule(process.env.NODE_ENV);
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {list: []};
+        this.state = {
+            list: [],
+            selectedItem: {}
+        };
+
+        this.handleItemSelect = this.handleItemSelect.bind(this);
 
         // Needed for onTouchTap
         // http://stackoverflow.com/a/34015469/988941
         injectTapEventPlugin();
+    }
+
+    handleItemSelect(selectedItem) {
+        this.state.list.forEach((item) => {
+            if(item === selectedItem) {
+                console.log('found it !!!');
+                this.setState({selectedItem});
+            }
+        })
     }
 
     componentDidMount() {
@@ -47,9 +61,9 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="App">
-                    <GoogleMapsComponent list={this.state.list} />
+                    <GoogleMapsComponent list={this.state.list}/>
                     <div className="App-footer">
-                        <ImagePanelComponent list={this.state.list} />
+                        <ImagePanelComponent list={this.state.list}/>
                     </div>
                 </div>
             </MuiThemeProvider>
