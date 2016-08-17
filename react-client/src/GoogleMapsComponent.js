@@ -82,7 +82,7 @@ export default class GoogleMapsComponent extends Component {
                         }}
                         center={(this.props.selectedItem)? this.props.selectedItem.gps: undefined}
                         zoom={(this.props.selectedItem)? 20: undefined}
-                        mapTypeId='satellite'
+                        mapTypeId='hybrid'
                         onClick={this.handleMapClick} >
 
                             {this.props.list.map((item, index) => {
