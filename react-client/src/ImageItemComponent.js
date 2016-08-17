@@ -44,7 +44,7 @@ class ImageItemComponent extends Component {
                         width: '100%',
                         justifyContent: 'center',
                         alignItems: 'center'}}>
-                            <img onClick={this.handleClose} src={this.props.item.src} style={{height: '70vh', width: 'auto'}}/>
+                            <img onClick={this.handleClose} src={this.props.item.src} alt={this.props.item.src} style={{height: '70vh', width: 'auto'}}/>
                         </div>
                     </Dialog>
                 </div>

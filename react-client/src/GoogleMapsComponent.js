@@ -5,7 +5,6 @@
 import {default as React, Component} from "react";
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import {GoogleMap, Marker} from "react-google-maps";
-import {default as MarkerClusterer} from 'react-google-maps/lib/addons/MarkerClusterer'
 
 
 export default class GoogleMapsComponent extends Component {
@@ -82,25 +81,20 @@ export default class GoogleMapsComponent extends Component {
                             this.panToMarkers(googleMap);
                         }}
                         center={(this.props.selectedItem)? this.props.selectedItem.gps: undefined}
-                        zoom={(this.props.selectedItem)? 12: undefined}
+                        zoom={(this.props.selectedItem)? 20: undefined}
+                        mapTypeId='satellite'
                         onClick={this.handleMapClick} >
-
-                        <MarkerClusterer
-                          averageCenter
-                          enableRetinaIcons
-                          gridSize={60}>
 
                             {this.props.list.map((item, index) => {
                               return (
                                 <Marker
                                     position={item.gps}
                                     key={key++}
-                                    icon={(item==this.props.selectedItem)? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : undefined}
+                                    icon={(item===this.props.selectedItem)? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : undefined}
                                     onRightclick={this.handleMarkerRightclick.bind(this, index)}
                                 />
                               );
                             })}
-                        </MarkerClusterer>
                         </GoogleMap>
                     }/>
             </div>
