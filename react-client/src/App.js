@@ -29,8 +29,8 @@ class App extends Component {
     handleItemSelect(selectedItem) {
         this.state.list.forEach((item) => {
             if(item === selectedItem) {
-                console.log('found it !!!');
-                this.setState({selectedItem});
+                console.log('found it !!! ' + JSON.stringify(selectedItem.gps));
+                this.setState({selectedItem: item});
             }
         })
     }
@@ -61,9 +61,9 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="App">
-                    <GoogleMapsComponent list={this.state.list}/>
+                    <GoogleMapsComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
                     <div className="App-footer">
-                        <ImagePanelComponent list={this.state.list}/>
+                        <ImagePanelComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
                     </div>
                 </div>
             </MuiThemeProvider>

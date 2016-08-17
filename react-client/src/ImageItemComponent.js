@@ -22,6 +22,7 @@ class ImageItemComponent extends Component {
     render() {
         return (
             <Badge
+                onClick={() => {this.props.handleItemSelect(this.props.item)}}
                 badgeStyle={{top: '25px', right: '25px'}}
                 badgeContent={<FloatingActionButton>
                                   <MapsPlace />

@@ -34,9 +34,7 @@ function convertDMSToDD(degrees, minutes, seconds, direction) {
 function extractCoordinates(gps) {
     const lat = convertDMSToDD(...gps.GPSLatitude, gps.GPSLatitudeRef);
     const lng = convertDMSToDD(...gps.GPSLongitude, gps.GPSLongitudeRef);
-    const gmaps = `http://maps.google.com/maps?q=${lat},${lng}`;
-    const streetview = `http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}`;
-    return {lat, lng, gmaps, streetview};
+    return {lat, lng};
 }
 
 app.get(config.posEndpoint + '/:pic', function (req, res) {
@@ -63,9 +61,12 @@ app.get(config.listEndpoint, function (req, res) {
                                 if(err) {
                                     reject(err);
                                 } else {
+                                    const gps = extractCoordinates(exifData.gps);
                                     resolve({
                                         src: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
-                                        gps: extractCoordinates(exifData.gps),
+                                        gps,
+                                        gmaps: `http://maps.google.com/maps?q=${gps.lat},${gps.lng}`,
+                                        streetview: `http://maps.google.com/maps?q=&layer=c&cbll=${gps.lat},${gps.lng}`,
                                         dimensions,
                                         timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
                                     });

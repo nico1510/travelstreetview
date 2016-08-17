@@ -42,8 +42,13 @@ export default class GoogleMapsComponent extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         // When initialRender is flipped to true the component should not re-render because the view is not affected by this state change
         if (this.state.initialRender && !nextState.initialRender) {
+            console.log('won\'t re-render');
             return false;
         } else {
+            console.log('will re-render');
+            if(nextProps.selectedItem) {
+                console.log('Center is now: ' + JSON.stringify(nextProps.selectedItem.gps));
+            }
             return true;
         }
     }
@@ -59,7 +64,7 @@ export default class GoogleMapsComponent extends Component {
                     pathname={"/maps/api/js"}
                     query={{ key: 'AIzaSyCtpyLylm0fZPF8ikfs-UTtctdn-xWxxaU', libraries: `geometry,drawing,places` }}
                     loadingElement={
-                      <div {...this.props} style={{ height: `100%` }}>
+                      <div style={{ height: `100%` }}>
                         Loading Map...
                       </div>
                     }
@@ -76,6 +81,8 @@ export default class GoogleMapsComponent extends Component {
                             }
                             this.panToMarkers(googleMap);
                         }}
+                        center={(this.props.selectedItem)? this.props.selectedItem.gps: undefined}
+                        zoom={(this.props.selectedItem)? 12: undefined}
                         onClick={this.handleMapClick} >
 
                         <MarkerClusterer
@@ -85,7 +92,11 @@ export default class GoogleMapsComponent extends Component {
 
                             {this.props.list.map((item, index) => {
                               return (
-                                <Marker position={item.gps} key={key++} onRightclick={this.handleMarkerRightclick.bind(this, index)}
+                                <Marker
+                                    position={item.gps}
+                                    key={key++}
+                                    icon={(item==this.props.selectedItem)? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : undefined}
+                                    onRightclick={this.handleMarkerRightclick.bind(this, index)}
                                 />
                               );
                             })}
