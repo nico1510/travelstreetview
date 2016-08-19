@@ -16,8 +16,16 @@
 }
 
 .G-maps-container {
-  height: 70%;
   width: 50%;
+}
+
+.StreetView-container {
+  width: 50%;
+}
+
+.Google-container {
+  display: flex;
+  height: 70%;
 }
 
 .App-intro {

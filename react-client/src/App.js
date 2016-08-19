@@ -4,6 +4,7 @@ import './App.css';
 import serverConfigModule from '../../config'
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
+import {default as StreetViewComponent} from './StreetViewComponent';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -29,7 +30,6 @@ class App extends Component {
     handleItemSelect(selectedItem) {
         this.state.list.forEach((item) => {
             if(item === selectedItem) {
-                console.log('found it !!! ' + JSON.stringify(selectedItem.gps));
                 this.setState({selectedItem: item});
             }
         })
@@ -37,7 +37,6 @@ class App extends Component {
 
     componentDidMount() {
         window.$ = $;
-        console.log('starting to fetch');
         this.serverRequest = $.ajax({
                 type: "GET",
                 url: window.location.protocol + '//' + window.location.hostname + ':' + config.ports.http + config.listEndpoint,
@@ -45,7 +44,6 @@ class App extends Component {
                     console.log("Error: " + xhr.responseText);
                 },
                 success: (list) => {
-                    console.log('done fetching');
                     this.setState({list});
                 }
             }
@@ -61,7 +59,10 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="App">
-                    <GoogleMapsComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
+                    <div className="Google-container">
+                        <GoogleMapsComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
+                        <StreetViewComponent selectedPosition={this.state.selectedItem.gps} />
+                    </div>
                     <div className="App-footer">
                         <ImagePanelComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
                     </div>

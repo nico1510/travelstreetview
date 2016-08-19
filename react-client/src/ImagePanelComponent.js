@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import ImageItemComponent from './ImageItemComponent';
 

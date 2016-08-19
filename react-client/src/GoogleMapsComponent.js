@@ -41,13 +41,8 @@ export default class GoogleMapsComponent extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         // When initialRender is flipped to true the component should not re-render because the view is not affected by this state change
         if (this.state.initialRender && !nextState.initialRender) {
-            console.log('won\'t re-render');
             return false;
         } else {
-            console.log('will re-render');
-            if(nextProps.selectedItem) {
-                console.log('Center is now: ' + JSON.stringify(nextProps.selectedItem.gps));
-            }
             return true;
         }
     }
