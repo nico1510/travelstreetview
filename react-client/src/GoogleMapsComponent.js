@@ -13,7 +13,6 @@ export default class GoogleMapsComponent extends Component {
     constructor(props) {
         super(props);
         this.panToMarkers = this.panToMarkers.bind(this);
-        window._ = _;
         this.state = {initialRender: true};
     }
 
