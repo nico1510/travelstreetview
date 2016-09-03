@@ -5,20 +5,16 @@
 import {default as React, Component} from "react";
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import {GoogleMap, Marker} from "react-google-maps";
+import {default as _} from 'lodash';
 //import {default as MarkerClusterer} from 'react-google-maps/lib/addons/MarkerClusterer';
 
 export default class GoogleMapsComponent extends Component {
 
     constructor(props) {
         super(props);
-        this.handleMapClick = this.handleMapClick.bind(this);
         this.panToMarkers = this.panToMarkers.bind(this);
-
+        window._ = _;
         this.state = {initialRender: true};
-    }
-
-    handleMapClick(event) {
-        console.log('The map was clicked');
     }
 
     panToMarkers(googleMap) {
@@ -73,22 +69,38 @@ export default class GoogleMapsComponent extends Component {
                         center={(this.props.selectedItem)? this.props.selectedItem.gps: undefined}
                         zoom={(this.props.selectedItem)? 12: undefined}
                         mapTypeId='hybrid'
-                        onClick={this.handleMapClick} >
+                        onClick={this.props.handleMapClick} >
 {/*                       <MarkerClusterer
                           averageCenter={ true }
                           enableRetinaIcons={ true }
                           gridSize={60}>
 */}
+                            /* Marker for 'map-click-event' position */
+                            {
+                            (!this.props.selectedPosition || (this.props.selectedItem && _.isEqual(this.props.selectedPosition, this.props.selectedItem.gps)))? undefined :
+                           <Marker position={this.props.selectedPosition}
+                            icon='https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+                           />
+                           }
+
                             {this.props.list.map((item) => {
                               return (
+                              (this.props.selectedItem && _.isEqual(this.props.selectedItem.gps, item.gps))? undefined :
                                 <Marker
                                     position={item.gps}
                                     key={key++}
-                                    icon={(item===this.props.selectedItem)? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : undefined}
                                     onClick={this.props.handleItemSelect.bind(this, item)}
                                 />
                               );
                             })}
+
+                            /* Marker for selected item */
+                            {(!this.props.selectedItem)? undefined :
+                             <Marker position={this.props.selectedItem.gps}
+                                     icon='https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                                     onClick={this.props.handleItemSelect.bind(this, this.props.selectedItem)}
+                             />
+                             }
 {/*
                             </MarkerClusterer>
 */}

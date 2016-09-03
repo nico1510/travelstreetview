@@ -18,10 +18,12 @@ class App extends Component {
         super(props);
         this.state = {
             list: [],
-            selectedItem: {}
+            selectedItem: undefined,
+            streetViewPosition: undefined
         };
 
         this.handleItemSelect = this.handleItemSelect.bind(this);
+        this.handleMapClick = this.handleMapClick.bind(this);
 
         // Needed for onTouchTap
         // http://stackoverflow.com/a/34015469/988941
@@ -30,15 +32,23 @@ class App extends Component {
 
     handleItemSelect(selectedItem) {
         this.state.list.forEach((item, index) => {
-            if(item === selectedItem) {
-                this.setState({selectedItem: item});
+            if (item === selectedItem) {
+                this.setState({
+                    selectedItem: item,
+                    streetViewPosition: item.gps
+                });
                 scrollIntoView($(`div.image-panel > div:nth-child(${index})`)[0]);
             }
         })
     }
 
+    handleMapClick(event) {
+        this.setState({
+            streetViewPosition: event.latLng
+        });
+    }
+
     componentDidMount() {
-        window.$ = $;
         this.serverRequest = $.ajax({
                 type: "GET",
                 url: window.location.protocol + '//' + window.location.hostname + ':' + config.ports.http + config.listEndpoint,
@@ -62,8 +72,8 @@ class App extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="App">
                     <div className="Google-container">
-                        <GoogleMapsComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
-                        <StreetViewComponent selectedPosition={this.state.selectedItem.gps} />
+                        <GoogleMapsComponent selectedPosition={this.state.streetViewPosition} handleMapClick={this.handleMapClick} handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
+                        <StreetViewComponent selectedPosition={this.state.streetViewPosition} />
                     </div>
                     <div className="App-footer">
                         <ImagePanelComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
