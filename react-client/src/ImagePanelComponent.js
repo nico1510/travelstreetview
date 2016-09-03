@@ -8,7 +8,7 @@ function ImagePanelComponent(props) {
         <div className='image-panel' style={{backgroundColor: darkBaseTheme.palette.canvasColor}}>
             {!props.list.length ? 'Loading...' : props.list.map((item) => {
                 return (
-                    <ImageItemComponent handleItemSelect={props.handleItemSelect} item={item} key={key++}/>
+                    <ImageItemComponent handleItemSelect={props.handleItemSelect} isSelected={item === props.selectedItem} item={item} key={key++}/>
                 )
             })}
         </div>

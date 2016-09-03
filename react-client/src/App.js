@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import {default as scrollIntoView} from 'scroll-into-view';
 
 const config = serverConfigModule(process.env.NODE_ENV);
 
@@ -28,9 +29,10 @@ class App extends Component {
     }
 
     handleItemSelect(selectedItem) {
-        this.state.list.forEach((item) => {
+        this.state.list.forEach((item, index) => {
             if(item === selectedItem) {
                 this.setState({selectedItem: item});
+                scrollIntoView($(`div.image-panel > div:nth-child(${index})`)[0]);
             }
         })
     }

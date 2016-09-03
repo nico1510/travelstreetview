@@ -22,12 +22,12 @@ class ImageItemComponent extends Component {
     render() {
         return (
             <Badge
-                onClick={() => {this.props.handleItemSelect(this.props.item)}}
+                onClick={this.props.handleItemSelect.bind(this, this.props.item)}
                 badgeStyle={{top: '25px', right: '25px'}}
                 badgeContent={<FloatingActionButton>
                                   <MapsPlace />
                               </FloatingActionButton>}>
-                <div className='image-item' style={{ backgroundImage: `url('${this.props.item.src}')`}} onClick={this.handleImageClick}>
+                <div className={'image-item ' + ((this.props.isSelected)? 'cyan-shadow' : 'black-shadow')} style={{ backgroundImage: `url('${this.props.item.src}')`}} onClick={this.handleImageClick}>
                     <Dialog
                         actions={[]}
                         bodyStyle={{margin: '0px', padding: '0px'}}

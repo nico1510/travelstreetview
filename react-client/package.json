@@ -11,7 +11,8 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-google-maps": "^5.0.0",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^1.0.0",
+    "scroll-into-view": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -56,8 +56,16 @@
   background-repeat:no-repeat;
   width:230px;
   border-radius: 50px;
+  border: 1px solid darkslategray;
   margin: 5px;
   min-width: 250px;
   height:230px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.black-shadow {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.5)
+}
+
+.cyan-shadow {
+  box-shadow: 0 6px 30px 0 rgba(0, 151, 167, 0.5)
 }

@@ -12,7 +12,6 @@ export default class GoogleMapsComponent extends Component {
     constructor(props) {
         super(props);
         this.handleMapClick = this.handleMapClick.bind(this);
-        this.handleMarkerRightclick = this.handleMarkerRightclick.bind(this);
         this.panToMarkers = this.panToMarkers.bind(this);
 
         this.state = {initialRender: true};
@@ -20,10 +19,6 @@ export default class GoogleMapsComponent extends Component {
 
     handleMapClick(event) {
         console.log('The map was clicked');
-    }
-
-    handleMarkerRightclick(index, event) {
-        console.log('I was right clicked');
     }
 
     panToMarkers(googleMap) {
@@ -84,13 +79,13 @@ export default class GoogleMapsComponent extends Component {
                           enableRetinaIcons={ true }
                           gridSize={60}>
 */}
-                            {this.props.list.map((item, index) => {
+                            {this.props.list.map((item) => {
                               return (
                                 <Marker
                                     position={item.gps}
                                     key={key++}
                                     icon={(item===this.props.selectedItem)? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : undefined}
-                                    onRightclick={this.handleMarkerRightclick.bind(this, index)}
+                                    onClick={this.props.handleItemSelect.bind(this, item)}
                                 />
                               );
                             })}
