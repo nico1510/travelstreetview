@@ -74,12 +74,11 @@ export default class GoogleMapsComponent extends Component {
                           enableRetinaIcons={ true }
                           gridSize={60}>
 */}
-                            /* Marker for 'map-click-event' position */
-                            {
-                            (!this.props.selectedPosition || (this.props.selectedItem && _.isEqual(this.props.selectedPosition, this.props.selectedItem.gps)))? undefined :
-                           <Marker position={this.props.selectedPosition}
-                            icon='https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
-                           />
+                            {/* Marker for 'map-click-event' position */}
+                           {(!this.props.selectedPosition || (this.props.selectedItem && _.isEqual(this.props.selectedPosition, this.props.selectedItem.gps)))? undefined :
+                               <Marker position={this.props.selectedPosition}
+                                icon='https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+                               />
                            }
 
                             {this.props.list.map((item) => {
@@ -93,12 +92,12 @@ export default class GoogleMapsComponent extends Component {
                               );
                             })}
 
-                            /* Marker for selected item */
+                            {/* Marker for selected item */}
                             {(!this.props.selectedItem)? undefined :
-                             <Marker position={this.props.selectedItem.gps}
-                                     icon='https://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                                     onClick={this.props.handleItemSelect.bind(this, this.props.selectedItem)}
-                             />
+                                 <Marker position={this.props.selectedItem.gps}
+                                         icon='https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                                         onClick={this.props.handleItemSelect.bind(this, this.props.selectedItem)}
+                                 />
                              }
 {/*
                             </MarkerClusterer>
