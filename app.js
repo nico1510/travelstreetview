@@ -9,7 +9,6 @@ const staticPath = 'public';
 const picsFolder = '/pics';
 const picsDir = path.join(staticPath, picsFolder);
 const config = require('./config')(process.env.NODE_ENV);
-const sizeOf = require('image-size');
 
 const allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -32,19 +31,14 @@ function convertDMSToDD(degrees, minutes, seconds, direction) {
 }
 
 function extractCoordinates(gps) {
-    const lat = convertDMSToDD(...gps.GPSLatitude, gps.GPSLatitudeRef);
-    const lng = convertDMSToDD(...gps.GPSLongitude, gps.GPSLongitudeRef);
-    return {lat, lng};
+    if(gps.GPSLatitude && gps.GPSLongitude) {
+        const lat = convertDMSToDD(...gps.GPSLatitude, gps.GPSLatitudeRef);
+        const lng = convertDMSToDD(...gps.GPSLongitude, gps.GPSLongitudeRef);
+        return {lat, lng};
+    } else {
+        return {};
+    }
 }
-
-app.get(config.posEndpoint + '/:pic', function (req, res) {
-    new ExifImage({image: path.join(__dirname, picsDir, req.params.pic)}, function (error, exifData) {
-        if (error)
-            res.json({error: error.message});
-        else
-            res.json(exifData.gps);
-    });
-});
 
 app.get(config.listEndpoint, function (req, res) {
     glob(path.join(__dirname, picsDir, '*.jpg'), function (err, files) {
@@ -57,20 +51,12 @@ app.get(config.listEndpoint, function (req, res) {
                         if (error)
                             reject(error);
                         else {
-                            sizeOf(file, function (err, dimensions) {
-                                if(err) {
-                                    reject(err);
-                                } else {
-                                    const gps = extractCoordinates(exifData.gps);
-                                    resolve({
-                                        src: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
-                                        gps,
-                                        gmaps: `http://maps.google.com/maps?q=${gps.lat},${gps.lng}`,
-                                        streetview: `http://maps.google.com/maps?q=&layer=c&cbll=${gps.lat},${gps.lng}`,
-                                        dimensions,
-                                        timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
-                                    });
-                                }
+                            const gps = extractCoordinates(exifData.gps);
+                            resolve({
+                                src: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
+                                gps,
+                                orientation: exifData.image.Orientation,
+                                timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
                             });
                         }
                     });

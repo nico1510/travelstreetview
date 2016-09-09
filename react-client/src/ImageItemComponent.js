@@ -27,7 +27,13 @@ class ImageItemComponent extends Component {
                 badgeContent={<FloatingActionButton>
                                   <MapsPlace />
                               </FloatingActionButton>}>
-                <div className={'image-item ' + ((this.props.isSelected)? 'cyan-shadow' : 'black-shadow')} style={{ backgroundImage: `url('${this.props.item.src}')`}} onClick={this.handleImageClick}>
+                <div className={'image-item '
+                    + ((this.props.isSelected)? 'cyan-shadow' : 'black-shadow')
+                    + ((this.props.item.orientation === 6)? ' rotate-bg-img' : ' ')
+                        }
+                     style={{ backgroundImage: `url('${this.props.item.src}')`}}
+                     onClick={this.handleImageClick}>
+
                     <Dialog
                         actions={[]}
                         bodyStyle={{margin: '0px', padding: '0px'}}
@@ -39,12 +45,15 @@ class ImageItemComponent extends Component {
                         open={this.state.dialogOpen}
                         onRequestClose={this.handleClose}>
                         <div style={{
-                        height: '80vh',
-                        display: 'flex',
-                        width: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center'}}>
-                            <img onClick={this.handleClose} src={this.props.item.src} alt={this.props.item.src} style={{height: '70vh', width: 'auto'}}/>
+                            height: '80vh',
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <img onClick={this.handleClose} src={this.props.item.src}
+                                 alt={this.props.item.src}
+                                 className={((this.props.item.orientation === 6)? ' rotated-full-img' : 'normal-full-img')} />
                         </div>
                     </Dialog>
                 </div>

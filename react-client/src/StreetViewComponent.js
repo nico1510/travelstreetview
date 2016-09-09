@@ -1,6 +1,6 @@
 import React from 'react';
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
-import {GoogleMap, Marker} from "react-google-maps";
+import {GoogleMap} from "react-google-maps";
 
 function StreetViewComponent(props) {
 

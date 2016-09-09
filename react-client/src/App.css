@@ -54,11 +54,10 @@
 .image-item {
   background-size:cover;
   background-repeat:no-repeat;
-  width:230px;
   border-radius: 50px;
   border: 1px solid darkslategray;
   margin: 5px;
-  min-width: 250px;
+  width:230px;
   height:230px;
 }
 
@@ -68,4 +67,19 @@
 
 .cyan-shadow {
   box-shadow: 0 6px 30px 0 rgba(0, 151, 167, 0.5)
+}
+
+.rotate-bg-img {
+  transform: rotate(90deg)
+}
+
+.rotated-full-img {
+  height: auto;
+  transform: rotate(90deg);
+  width: 70vh
+}
+
+.normal-full-img {
+  height: 70vh;
+  width: auto
 }
