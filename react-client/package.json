@@ -12,9 +12,11 @@
     "material-ui": "^0.15.4",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-dropzone": "^3.6.0",
     "react-google-maps": "^5.0.0",
     "react-tap-event-plugin": "^1.0.0",
-    "scroll-into-view": "^1.7.1"
+    "scroll-into-view": "^1.7.1",
+    "superagent": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

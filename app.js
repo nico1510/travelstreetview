@@ -41,7 +41,7 @@ function extractCoordinates(gps) {
 }
 
 app.get(config.listEndpoint, function (req, res) {
-    glob(path.join(__dirname, picsDir, '*.jpg'), function (err, files) {
+    glob(path.join(__dirname, picsDir, '*.{jpg,jpeg,jpe}'), {nocase: true}, function (err, files) {
         if (err) {
             res.json({error: err});
         } else {

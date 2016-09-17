@@ -37,7 +37,7 @@ class ImageItemComponent extends Component {
                             <MapsPlace />
                         </FloatingActionButton>
                         :
-                        <FloatingActionButton backgroundColor={errorColor} tooltip="No GPS data available" tooltipPosition="bottom-right">
+                        <FloatingActionButton backgroundColor={errorColor}>
                             <NavigationCancel />
                         </FloatingActionButton>
                 }>
