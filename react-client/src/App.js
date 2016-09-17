@@ -72,11 +72,17 @@ class App extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div className="App">
                     <div className="Google-container">
-                        <GoogleMapsComponent selectedPosition={this.state.streetViewPosition} handleMapClick={this.handleMapClick} handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
-                        <StreetViewComponent selectedPosition={this.state.streetViewPosition} />
+                        <GoogleMapsComponent selectedPosition={this.state.streetViewPosition}
+                                             handleMapClick={this.handleMapClick}
+                                             handleItemSelect={this.handleItemSelect}
+                                             selectedItem={this.state.selectedItem}
+                                             list={this.state.list}/>
+                        <StreetViewComponent selectedPosition={this.state.streetViewPosition}/>
                     </div>
                     <div className="App-footer">
-                        <ImagePanelComponent handleItemSelect={this.handleItemSelect} selectedItem={this.state.selectedItem} list={this.state.list}/>
+                        <ImagePanelComponent handleItemSelect={this.handleItemSelect}
+                                             selectedItem={this.state.selectedItem}
+                                             list={this.state.list}/>
                     </div>
                 </div>
             </MuiThemeProvider>

@@ -5,7 +5,7 @@ import MapsPlace from 'material-ui/svg-icons/maps/place';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 import FlatButton from 'material-ui/FlatButton';
-import { StyleSheet, css } from 'aphrodite';
+import {StyleSheet, css} from 'aphrodite';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import {red700 as errorColor} from 'material-ui/styles/colors'
 
@@ -32,19 +32,19 @@ class ImageItemComponent extends Component {
                 onClick={this.props.handleItemSelect.bind(this, this.props.item)}
                 badgeStyle={{top: '25px', right: '25px'}}
                 badgeContent={
-                    hasGPSattached(this.props.item)?
-                    <FloatingActionButton>
-                        <MapsPlace />
-                    </FloatingActionButton>
+                    hasGPSattached(this.props.item) ?
+                        <FloatingActionButton>
+                            <MapsPlace />
+                        </FloatingActionButton>
                         :
-                    <FloatingActionButton backgroundColor={errorColor} tooltip="No GPS data available" tooltipPosition="bottom-right">
-                        <NavigationCancel />
-                    </FloatingActionButton>
-                    }>
+                        <FloatingActionButton backgroundColor={errorColor} tooltip="No GPS data available" tooltipPosition="bottom-right">
+                            <NavigationCancel />
+                        </FloatingActionButton>
+                }>
                 <div className={css(styles.imageItem,
-                                this.props.isSelected? styles.highlightShadow : styles.blackShadow,
-                                (this.props.item.orientation === 6) && styles.rotateBgImg)}
-                     style={{ backgroundImage: `url('${this.props.item.src}')`}}
+                    this.props.isSelected ? styles.highlightShadow : styles.blackShadow,
+                    (this.props.item.orientation === 6) && styles.rotateBgImg)}
+                     style={{backgroundImage: `url('${this.props.item.src}')`}}
                      onClick={this.handleImageClick}>
 
                     <Dialog
@@ -57,12 +57,12 @@ class ImageItemComponent extends Component {
                         onRequestClose={this.handleClose}>
                         <div className={css(styles.dialogContent)}>
                             <FlatButton onClick={this.handleClose} className={css(styles.dialogCloseButton)}>
-                                <NavigationClose className={css(styles.closeIcon)} />
+                                <NavigationClose className={css(styles.closeIcon)}/>
                             </FlatButton>
 
                             <img onClick={this.handleClose} src={this.props.item.src}
                                  alt={this.props.item.src}
-                                 className={css((this.props.item.orientation === 6)? styles.rotatedFullImg : styles.normalFullImg)} />
+                                 className={css((this.props.item.orientation === 6) ? styles.rotatedFullImg : styles.normalFullImg)}/>
                         </div>
                     </Dialog>
                 </div>

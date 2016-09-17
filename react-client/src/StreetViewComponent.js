@@ -16,22 +16,22 @@ function StreetViewComponent(props) {
             <ScriptjsLoader
                 hostname={"maps.googleapis.com"}
                 pathname={"/maps/api/js"}
-                query={{ key: 'AIzaSyCtpyLylm0fZPF8ikfs-UTtctdn-xWxxaU', libraries: `geometry,drawing,places` }}
+                query={{key: 'AIzaSyCtpyLylm0fZPF8ikfs-UTtctdn-xWxxaU', libraries: `geometry,drawing,places`}}
                 loadingElement={
-                      <div style={{ height: `100%` }}>
+                    <div style={{height: `100%`}}>
                         Loading Map...
-                      </div>
-                    }
+                    </div>
+                }
 
                 containerElement={
-                        <div style={{ height: `100%` }} />
-                    }
+                    <div style={{height: `100%`}}/>
+                }
 
                 googleMapElement={
-                      <GoogleMap
-                         streetView={steetViewPanorama} >
-                      </GoogleMap>
-                    }/>
+                    <GoogleMap
+                        streetView={steetViewPanorama}>
+                    </GoogleMap>
+                }/>
         );
     }
 
