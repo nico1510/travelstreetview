@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import './App.css';
-import serverConfigModule from '../../config'
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
 import {default as StreetViewComponent} from './StreetViewComponent';
@@ -11,7 +10,6 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {default as scrollIntoView} from 'scroll-into-view';
 
-const config = serverConfigModule(process.env.NODE_ENV);
 
 class App extends Component {
     constructor(props) {
@@ -51,11 +49,12 @@ class App extends Component {
     componentDidMount() {
         this.serverRequest = $.ajax({
                 type: "GET",
-                url: window.location.protocol + '//' + window.location.hostname + ':' + config.ports.http + config.listEndpoint,
+                url: window.location.protocol + '//' + window.location.hostname + ':' + 3001 + '/api/list',
                 error: (xhr, status, error) => {
                     console.log("Error: " + xhr.responseText);
                 },
                 success: (list) => {
+                    console.log(list);
                     this.setState({list});
                 }
             }

@@ -4,10 +4,34 @@ const ExifImage = require('exif').ExifImage;
 const path = require('path');
 const glob = require("glob");
 const moment = require('moment');
+const multer  = require('multer');
 
 const staticPath = 'public';
 const picsFolder = '/pics';
 const picsDir = path.join(staticPath, picsFolder);
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, picsDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        if(file.mimetype !== 'image/jpeg') {
+            cb(null, false);
+        } else if(!path.extname(file.originalname).match(/\.(jp?g|jpe)$/i)) {
+            cb(null, false);
+        } else {
+            cb(null, true)
+        }
+    }
+});
+
 const config = require('./config')(process.env.NODE_ENV);
 
 const allowCrossDomain = function (req, res, next) {
@@ -40,6 +64,10 @@ function extractCoordinates(gps) {
     }
 }
 
+app.post('/photos/upload', upload.array('travel_photos'), function (req, res, next) {
+    console.log(req.files);
+});
+
 app.get(config.listEndpoint, function (req, res) {
     glob(path.join(__dirname, picsDir, '*.{jpg,jpeg,jpe}'), {nocase: true}, function (err, files) {
         if (err) {
@@ -49,7 +77,12 @@ app.get(config.listEndpoint, function (req, res) {
                 return new Promise(function (resolve, reject) {
                     new ExifImage({image: file}, function (error, exifData) {
                         if (error)
-                            reject(error);
+                            resolve({
+                                src: req.protocol + '://' + req.get('host') + path.join(picsFolder, path.basename(file)),
+                                gps: undefined,
+                                orientation: undefined,
+                                timestamp: undefined
+                            });
                         else {
                             const gps = extractCoordinates(exifData.gps);
                             resolve({
@@ -63,7 +96,7 @@ app.get(config.listEndpoint, function (req, res) {
                 });
             });
             Promise.all(gpsPromiseList).then(res.json.bind(res)).catch(function (err) {
-                res.json({error: err.message})
+                console.log(err);   // this should never happen since the promise never rejects
             });
         }
     });

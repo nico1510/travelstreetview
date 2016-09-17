@@ -10,9 +10,7 @@ function serverConfig(environment) {
             http: (environment === 'production') ? 80 : 3001
         },
 
-        listEndpoint: '/api/list',
-        posEndpoint: '/api/pos'
-
+        listEndpoint: '/api/list'
     };
 
     return config;
