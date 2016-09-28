@@ -54,7 +54,6 @@ class App extends Component {
                     console.log("Error: " + xhr.responseText);
                 },
                 success: (list) => {
-                    console.log(list);
                     this.setState({list});
                 }
             }

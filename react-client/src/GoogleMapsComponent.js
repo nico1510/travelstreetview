@@ -40,6 +40,7 @@ export default class GoogleMapsComponent extends Component {
 
     render() {
         let key = 0;
+        const isSamePositionAsSelectedItem = (item) => hasGPSattached(item) && !(this.props.selectedItem && hasGPSattached(this.props.selectedItem) && isSamePosition(this.props.selectedItem.gps, item.gps));
 
         return (
             <div className='G-maps-container'>
@@ -80,13 +81,12 @@ export default class GoogleMapsComponent extends Component {
                                         icon='https://maps.google.com/mapfiles/ms/icons/yellow-dot.png'/>
                             }
 
-                            {this.props.list.filter(hasGPSattached).map((item) => {
+                            {this.props.list.filter(isSamePositionAsSelectedItem).map((item) => {
                                 return (
-                                    (this.props.selectedItem && isSamePosition(this.props.selectedItem.gps, item.gps)) ? undefined :
-                                        <Marker
-                                            position={item.gps}
-                                            key={key++}
-                                            onClick={this.props.handleItemSelect.bind(this, item)}/>
+                                    <Marker
+                                        position={item.gps}
+                                        key={key++}
+                                        onClick={this.props.handleItemSelect.bind(this, item)}/>
                                 );
                             })}
 
