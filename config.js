@@ -10,6 +10,8 @@ function serverConfig(environment) {
             http: (environment === 'production') ? 80 : 3001
         },
 
+        cookieSecret: 'Normally you wouldnt upload this to Github',
+
         listEndpoint: '/api/list'
     };
 
