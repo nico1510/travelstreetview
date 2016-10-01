@@ -6,6 +6,7 @@ const glob = require("glob");
 const moment = require('moment');
 const multer  = require('multer');
 const session = require('express-session');
+const uuid = require('uuid');
 
 const staticPath = 'public';
 const clientPath = 'react-client/build';
@@ -19,7 +20,7 @@ const storage = multer.diskStorage({
         cb(null, picsDir);
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname));
+        cb(null, file.fieldname + '_' + uuid.v1() + path.extname(file.originalname));
     }
 });
 
@@ -94,7 +95,7 @@ app.listen(port=config.ports.http, function () {
 
 
 function convertDMSToDD(degrees, minutes, seconds, direction) {
-    var dd = degrees + minutes/60 + seconds/(60*60);
+    let dd = degrees + minutes/60 + seconds/(60*60);
     if (direction === 'S' || direction === 'W') {
         dd = dd * -1;
     }
