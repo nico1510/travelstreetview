@@ -88,9 +88,7 @@ app.post('/photos/upload', upload.array('travel_photos'), function (req, res) {
 app.get(path.join(picsUrlFragment, picsFolder) + '/:filename', function (req, res) {
     // only allow access to photos which were uploaded by the user (in the same session)
     const filename = req.params.filename;
-    req.session.uploads = req.session.uploads || [];
-
-    if(req.session.uploads.find(upload => upload.src.split('/').pop() === filename)) {
+    if(req.session.uploads && req.session.uploads.find(upload => upload.src.split('/').pop() === filename)) {
         res.sendFile(filename, {root: picsDirFullPath});
     } else {
         res.status(404).send('Not found');

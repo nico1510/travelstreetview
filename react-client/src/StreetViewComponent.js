@@ -44,16 +44,18 @@ function StreetViewComponent(props) {
 
 
 function initStreetViewPanorama(pos) {
-    const panorama = new google.maps.StreetViewPanorama(
-        document.getElementById('streetViewMapHolder'), {
-            position: pos,
-            pov: {
-                heading: 34,
-                pitch: 10
-            }
-        });
-
-    return panorama;
+    if(typeof google !== 'undefined') {
+        return new google.maps.StreetViewPanorama(
+            document.getElementById('streetViewMapHolder'), {
+                position: pos,
+                pov: {
+                    heading: 34,
+                    pitch: 10
+                }
+            });
+    } else {
+        return undefined;
+    }
 }
 
 
