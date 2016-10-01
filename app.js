@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const ExifImage = require('exif').ExifImage;
 const path = require('path');
-const glob = require("glob");
 const moment = require('moment');
 const multer  = require('multer');
 const session = require('express-session');
