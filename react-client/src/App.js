@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import {serverRequest} from './Utils';
 import './App.css';
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
@@ -22,6 +23,7 @@ class App extends Component {
 
         this.handleItemSelect = this.handleItemSelect.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
+        this.fetchPhotos = this.fetchPhotos.bind(this);
 
         // Needed for onTouchTap
         // http://stackoverflow.com/a/34015469/988941
@@ -47,17 +49,18 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.serverRequest = $.ajax({
-                type: "GET",
-                url: window.location.protocol + '//' + window.location.hostname + ':' + 3001 + '/api/list',
-                error: (xhr, status, error) => {
-                    console.log("Error: " + xhr.responseText);
-                },
-                success: (list) => {
-                    this.setState({list});
-                }
-            }
-        );
+        this.fetchPhotos();
+    }
+
+    fetchPhotos() {
+        this.serverRequest = serverRequest(result => {
+            const defaultSelectedItem = result[0];  // select first item by default
+            this.setState({
+                list: result,
+                selectedItem: defaultSelectedItem,
+                streetViewPosition: (defaultSelectedItem && defaultSelectedItem.gps)? defaultSelectedItem.gps : undefined
+            })
+        });
     }
 
 
@@ -80,6 +83,7 @@ class App extends Component {
                     <div className="App-footer">
                         <ImagePanelComponent handleItemSelect={this.handleItemSelect}
                                              selectedItem={this.state.selectedItem}
+                                             handleFileUpload={this.fetchPhotos}
                                              list={this.state.list}/>
                     </div>
                 </div>

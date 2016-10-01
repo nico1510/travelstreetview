@@ -13,7 +13,6 @@ class ImageUploadComponent extends Component {
     }
 
     onDrop(files) {
-        //TODO: promise.all und dann setState und letztes file als selected auswählen
         var req = request.post(window.location.protocol + '//' + window.location.hostname + ':' + 3001 + '/photos/upload');
         files.forEach((file)=> {
             req.attach('travel_photos', file);
@@ -25,7 +24,11 @@ class ImageUploadComponent extends Component {
         if(err) {
             console.log(err);
         } else {
-            console.log(res);
+            if(res.body.success) {
+                this.props.handleFileUpload();
+            } else {
+                console.log(res);
+            }
         }
     }
 

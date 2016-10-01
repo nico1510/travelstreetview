@@ -57,42 +57,44 @@ app.use(session({
 
 
 app.post('/photos/upload', upload.array('travel_photos'), function (req, res, next) {
-    console.log(req.files);
+    req.session.uploads = req.session.uploads || [];
+
+    const gpsPromiseList = req.files.map((fileInfo) => {
+        const file = path.join(__dirname, fileInfo.path);
+        return new Promise(function (resolve) {
+            new ExifImage({image: file}, function (error, exifData) {
+                const src = req.protocol + '://' + req.get('host') + path.join(picsUrlFragment, picsFolder, fileInfo.filename);
+                if (error)
+                    resolve({
+                        src,
+                        gps: undefined,
+                        orientation: undefined,
+                        timestamp: undefined
+                    });
+                else {
+                    const gps = extractCoordinates(exifData.gps);
+                    resolve({
+                        src,
+                        gps,
+                        orientation: exifData.image.Orientation,
+                        timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
+                    });
+                }
+            });
+        });
+    });
+    Promise.all(gpsPromiseList).then(result => {
+        req.session.uploads = result.reverse().concat(req.session.uploads);
+        res.json({success: true});
+    }).catch(function (err) {
+        // this should never happen since the promise never rejects
+        console.trace(err);
+        res.json({success: false});
+    });
 });
 
 app.get(config.listEndpoint, function (req, res) {
-    glob(path.join(__dirname, picsDir, '*.{jpg,jpeg,jpe}'), {nocase: true}, function (err, files) {
-        if (err) {
-            res.json({error: err});
-        } else {
-            var gpsPromiseList = files.map(function (file) {
-                return new Promise(function (resolve, reject) {
-                    new ExifImage({image: file}, function (error, exifData) {
-                        const src = req.protocol + '://' + req.get('host') + path.join(picsUrlFragment, picsFolder, path.basename(file));
-                        if (error)
-                            resolve({
-                                src,
-                                gps: undefined,
-                                orientation: undefined,
-                                timestamp: undefined
-                            });
-                        else {
-                            const gps = extractCoordinates(exifData.gps);
-                            resolve({
-                                src,
-                                gps,
-                                orientation: exifData.image.Orientation,
-                                timestamp: moment(exifData.exif.CreateDate, 'YYYY:MM:DD HH:mm:ss').unix()
-                            });
-                        }
-                    });
-                });
-            });
-            Promise.all(gpsPromiseList).then(res.json.bind(res)).catch(function (err) {
-                console.log(err);   // this should never happen since the promise never rejects
-            });
-        }
-    });
+    res.json(req.session.uploads || []);
 });
 
 app.listen(port=config.ports.http, function () {

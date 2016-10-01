@@ -4,7 +4,7 @@
   "description": "A react application for displaying google streetview at image locations",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "cd react-client && npm run build && cd .. && node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

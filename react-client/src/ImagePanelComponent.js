@@ -8,7 +8,7 @@ function ImagePanelComponent(props) {
     let key = 0;
     return (
         <div id="image-panel" className={css(styles.imagePanel)}>
-            <ImageUploadComponent />
+            <ImageUploadComponent handleFileUpload={props.handleFileUpload} />
             {props.list.map((item) => {
                 return (
                     <ImageItemComponent handleItemSelect={props.handleItemSelect}
