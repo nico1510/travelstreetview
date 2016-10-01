@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cd react-client && npm run build && cd .. && node app.js",
-    "postinstall": "cd react-client && npm install && cd.. ",
+    "postinstall": "cd react-client && npm install && cd .. ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
