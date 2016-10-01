@@ -1,3 +1,4 @@
+"use strict";
 const express = require('express');
 const app = express();
 const ExifImage = require('exif').ExifImage;
@@ -12,12 +13,12 @@ const staticPath = 'public';
 const clientPath = 'react-client/build';
 const picsFolder = '/pics';
 const picsUrlFragment = '/tmp/';
-const picsDir = path.join(staticPath, picsFolder);
+const picsDirFullPath = path.join(staticPath, picsFolder);
 const config = require('./config')(process.env.NODE_ENV);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, picsDir);
+        cb(null, picsDirFullPath);
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '_' + uuid.v1() + path.extname(file.originalname));
@@ -37,7 +38,6 @@ const upload = multer({
     }
 });
 
-app.use(picsUrlFragment, express.static(staticPath));
 app.use(express.static(clientPath));
 
 app.use(session({
@@ -48,7 +48,7 @@ app.use(session({
 }));
 
 
-app.post('/photos/upload', upload.array('travel_photos'), function (req, res, next) {
+app.post('/photos/upload', upload.array('travel_photos'), function (req, res) {
     req.session.uploads = req.session.uploads || [];
 
     const gpsPromiseList = req.files.map((fileInfo) => {
@@ -85,12 +85,25 @@ app.post('/photos/upload', upload.array('travel_photos'), function (req, res, ne
     });
 });
 
+app.get(path.join(picsUrlFragment, picsFolder) + '/:filename', function (req, res) {
+    // only allow access to photos which were uploaded by the user (in the same session)
+    const filename = req.params.filename;
+    req.session.uploads = req.session.uploads || [];
+
+    if(req.session.uploads.find(upload => upload.src.split('/').pop() === filename)) {
+        res.sendFile(filename, {root: picsDirFullPath});
+    } else {
+        res.status(404).send('Not found');
+    }
+});
+
+
 app.get(config.listEndpoint, function (req, res) {
     res.json(req.session.uploads || []);
 });
 
-app.listen(port=config.ports.http, function () {
-    console.log(`App listening on port ${port}!`);
+app.listen(config.ports.http, function () {
+    console.log(`App listening on port ${config.ports.http}!`);
 });
 
 
