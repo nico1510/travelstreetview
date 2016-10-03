@@ -6,7 +6,7 @@ import $ from 'jquery';
 export const serverRequest = (cb) => {
     return $.ajax({
             type: "GET",
-            url: window.location.protocol + '//' + window.location.hostname + ':' + 3001 + '/api/list',
+            url: '/api/list',
             error: (xhr, status, error) => {
                 console.log("Error: " + xhr.responseText);
             },

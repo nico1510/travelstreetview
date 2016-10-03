@@ -13,7 +13,7 @@ class ImageUploadComponent extends Component {
     }
 
     onDrop(files) {
-        var req = request.post(window.location.protocol + '//' + window.location.hostname + ':' + 3001 + '/photos/upload');
+        var req = request.post('/photos/upload');
         files.forEach((file)=> {
             req.attach('travel_photos', file);
         });
