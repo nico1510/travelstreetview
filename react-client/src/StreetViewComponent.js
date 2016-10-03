@@ -1,6 +1,7 @@
 import React from 'react';
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import {GoogleMap} from "react-google-maps";
+import {default as config} from './ClientConfig';
 
 function StreetViewComponent(props) {
 
@@ -16,7 +17,7 @@ function StreetViewComponent(props) {
             <ScriptjsLoader
                 hostname={"maps.googleapis.com"}
                 pathname={"/maps/api/js"}
-                query={{key: 'AIzaSyCtpyLylm0fZPF8ikfs-UTtctdn-xWxxaU', libraries: `geometry,drawing,places`}}
+                query={{key: config.apiKey, libraries: `geometry,drawing,places`}}
                 loadingElement={
                     <div style={{height: `100%`}}>
                         Loading Map...

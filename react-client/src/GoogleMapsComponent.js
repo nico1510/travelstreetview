@@ -5,6 +5,7 @@
 import {default as React, Component} from "react";
 import {default as ScriptjsLoader} from "react-google-maps/lib/async/ScriptjsLoader";
 import {GoogleMap, Marker} from "react-google-maps";
+import {default as config} from './ClientConfig';
 //import {default as MarkerClusterer} from 'react-google-maps/lib/addons/MarkerClusterer';
 import {hasGPSattached, isSamePosition} from './Utils';
 
@@ -47,7 +48,7 @@ export default class GoogleMapsComponent extends Component {
                 <ScriptjsLoader
                     hostname={"maps.googleapis.com"}
                     pathname={"/maps/api/js"}
-                    query={{key: 'AIzaSyCtpyLylm0fZPF8ikfs-UTtctdn-xWxxaU', libraries: `geometry,drawing,places`}}
+                    query={{key: config.apiKey, libraries: `geometry,drawing,places`}}
                     loadingElement={
                         <div style={{height: `100%`}}>
                             Loading Map...
