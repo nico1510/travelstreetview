@@ -13,7 +13,4 @@ pids
 
 .npm
 
-public/pics
-!public/pics/.gitkeep
-
 .idea
