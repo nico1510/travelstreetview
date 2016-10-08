@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
     imageItem: {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        borderRadius: '50px',
+        borderRadius: '7vh',
         border: '1px solid darkslategray',
         margin: '5px',
-        width: '230px',
-        height: '230px'
+        width: '24vh',
+        height: '24vh'
     },
 
     blackShadow: {

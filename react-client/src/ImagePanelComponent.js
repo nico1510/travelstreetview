@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     imagePanel: {
         display: 'flex',
         flexFlow: 'row nowrap',
-        width: '100 vw',
+        width: '100%',
         height: '100%',
         overflow: 'scroll',
         justifyContent: 'start',

@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     },
 
     uploadZone: {
-        borderRadius: '50px',
+        borderRadius: '7vh',
         border: '2px dashed darkslategray',
         margin: '5px',
-        minWidth: '230px',
-        width: '230px',
-        height: '230px',
+        minWidth: '24vh',
+        width: '24vh',
+        height: '24vh',
         padding: '10px',
         boxSizing: 'border-box',
         display: 'flex',
