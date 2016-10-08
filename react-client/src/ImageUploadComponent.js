@@ -42,7 +42,7 @@ class ImageUploadComponent extends Component {
             content = (
                 <div>
                     <CircularProgress />
-                    <div>Uploading {this.state.files.length} files</div>
+                    <div>Uploading {this.state.files.length} {(this.state.files.length > 1)? 'files' : 'file'}</div>
                 </div>
             );
         } else {
