@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, css} from 'aphrodite';
 import Dropzone from 'react-dropzone';
+import CircularProgress from 'material-ui/CircularProgress';
 import FileCloudUpload from 'material-ui/svg-icons/file/cloud-upload';
 import request from 'superagent';
 
@@ -8,11 +9,13 @@ class ImageUploadComponent extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {files: []};
         this.onDrop = this.onDrop.bind(this);
         this.onFileUpload = this.onFileUpload.bind(this);
     }
 
     onDrop(files) {
+        this.setState({files});
         var req = request.post('/photos/upload');
         files.forEach((file)=> {
             req.attach('travel_photos', file);
@@ -21,6 +24,7 @@ class ImageUploadComponent extends Component {
     }
 
     onFileUpload(err, res) {
+        this.setState({files: []});
         if(err) {
             console.log(err);
         } else {
@@ -33,6 +37,24 @@ class ImageUploadComponent extends Component {
     }
 
     render() {
+        let content;
+        if (this.state.files.length) {
+            content = (
+                <div>
+                    <CircularProgress />
+                    <div>Uploading {this.state.files.length} files</div>
+                </div>
+            );
+        } else {
+            content = (
+                <div>
+                    <div>Drag & Drop your images here or click to select files</div>
+                    <div>
+                        <FileCloudUpload />
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className={css(styles.uploadZoneContainer)}>
                 <Dropzone onDrop={this.onDrop}
@@ -40,10 +62,7 @@ class ImageUploadComponent extends Component {
                           disablePreview={true}
                           accept="image/jpeg"
                           className={css(styles.uploadZone)}>
-                    <div>Drag & Drop your images here or click to select files</div>
-                    <div>
-                        <FileCloudUpload />
-                    </div>
+                    {content}
                 </Dropzone>
             </div>
         );
