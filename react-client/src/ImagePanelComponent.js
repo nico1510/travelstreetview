@@ -5,7 +5,6 @@ import ImageUploadComponent from './ImageUploadComponent';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
 function ImagePanelComponent(props) {
-    let key = 0;
     return (
         <div id="image-panel" className={css(styles.imagePanel)}>
             <ImageUploadComponent handleFileUpload={props.handleFileUpload} />
@@ -14,7 +13,7 @@ function ImagePanelComponent(props) {
                     <ImageItemComponent handleItemSelect={props.handleItemSelect}
                                         isSelected={item === props.selectedItem}
                                         item={item}
-                                        key={key++}/>
+                                        key={item.src}/>
                 )
             })}
         </div>
