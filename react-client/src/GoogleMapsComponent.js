@@ -40,7 +40,6 @@ export default class GoogleMapsComponent extends Component {
 
 
     render() {
-        let key = 0;
         const isSamePositionAsSelectedItem = (item) => hasGPSattached(item) && !(this.props.selectedItem && hasGPSattached(this.props.selectedItem) && isSamePosition(this.props.selectedItem.gps, item.gps));
 
         return (
@@ -86,7 +85,7 @@ export default class GoogleMapsComponent extends Component {
                                 return (
                                     <Marker
                                         position={item.gps}
-                                        key={key++}
+                                        key={item.src}
                                         onClick={this.props.handleItemSelect.bind(this, item)}/>
                                 );
                             })}
