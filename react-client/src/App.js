@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import 'whatwg-fetch';
 import './App.css';
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
