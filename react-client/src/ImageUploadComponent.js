@@ -3,7 +3,6 @@ import {StyleSheet, css} from 'aphrodite';
 import Dropzone from 'react-dropzone';
 import CircularProgress from 'material-ui/CircularProgress';
 import FileCloudUpload from 'material-ui/svg-icons/file/cloud-upload';
-import request from 'superagent';
 
 class ImageUploadComponent extends Component {
 
@@ -16,23 +15,26 @@ class ImageUploadComponent extends Component {
 
     onDrop(files) {
         this.setState({files});
-        var req = request.post('/photos/upload');
+
+        const data = new FormData();
         files.forEach((file)=> {
-            req.attach('travel_photos', file);
+            data.append('travel_photos', file);
         });
-        req.end(this.onFileUpload);
+
+        fetch('/photos/upload', {
+            method: 'POST',
+            body: data,
+            credentials: 'same-origin'
+        }).then(res => res.json()).then(this.onFileUpload).catch(err => console.log(err));
     }
 
-    onFileUpload(err, res) {
+    onFileUpload(res) {
+        console.log(res);
         this.setState({files: []});
-        if(err) {
-            console.log(err);
+        if (res.success) {
+            this.props.handleFileUpload();
         } else {
-            if(res.body.success) {
-                this.props.handleFileUpload();
-            } else {
-                console.log(res);
-            }
+            console.log(res);
         }
     }
 
@@ -42,7 +44,7 @@ class ImageUploadComponent extends Component {
             content = (
                 <div>
                     <CircularProgress />
-                    <div>Uploading {this.state.files.length} {(this.state.files.length > 1)? 'files' : 'file'}</div>
+                    <div>Uploading {this.state.files.length} {(this.state.files.length > 1) ? 'files' : 'file'}</div>
                 </div>
             );
         } else {

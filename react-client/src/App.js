@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
-import {serverRequest} from './Utils';
+import 'whatwg-fetch';
 import './App.css';
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
@@ -53,7 +52,7 @@ class App extends Component {
     }
 
     fetchPhotos() {
-        this.serverRequest = serverRequest(result => {
+        this.request = fetch('/api/list', {credentials: 'same-origin'}).then(response => response.json()).then(result => {
             const defaultSelectedItem = result[0];  // select first item by default
             this.setState({
                 list: result,
@@ -65,7 +64,7 @@ class App extends Component {
 
 
     componentWillUnmount() {
-        this.serverRequest.abort();
+        // abort the request here as soon as there is a solution for this (see here https://github.com/whatwg/fetch/issues/27)
     }
 
     render() {
