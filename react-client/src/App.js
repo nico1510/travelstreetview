@@ -38,7 +38,7 @@ class App extends Component {
                     selectedItem: item,
                     streetViewPosition: item.gps
                 });
-                scrollIntoView($(`#image-panel`).find(`> div:nth-child(${index + 1})`)[0]);
+                scrollIntoView(document.querySelectorAll(`#image-panel > div:nth-child(${index + 1})`)[0]);
             }
         })
     }
