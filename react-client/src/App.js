@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import {default as injectDefaultCookieStrategyForFetch} from './fetch-with-cookies';
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
 import {default as StreetViewComponent} from './StreetViewComponent';
@@ -26,6 +27,8 @@ class App extends Component {
         // Needed for onTouchTap
         // http://stackoverflow.com/a/34015469/988941
         injectTapEventPlugin();
+
+        injectDefaultCookieStrategyForFetch('same-origin');
     }
 
     handleItemSelect(selectedItem) {
@@ -51,7 +54,7 @@ class App extends Component {
     }
 
     fetchPhotos() {
-        this.request = fetch('/api/list', {credentials: 'same-origin'}).then(response => response.json()).then(result => {
+        this.request = fetch('/api/list').then(response => response.json()).then(result => {
             const defaultSelectedItem = result[0];  // select first item by default
             this.setState({
                 list: result,

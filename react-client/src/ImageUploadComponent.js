@@ -23,18 +23,18 @@ class ImageUploadComponent extends Component {
 
         fetch('/photos/upload', {
             method: 'POST',
-            body: data,
-            credentials: 'same-origin'
-        }).then(res => res.json()).then(this.onFileUpload).catch(err => console.log(err));
+            body: data
+        }).then(res => res.json())
+            .then(this.onFileUpload)
+            .catch(err => console.err(err));
     }
 
     onFileUpload(res) {
-        console.log(res);
         this.setState({files: []});
         if (res.success) {
             this.props.handleFileUpload();
         } else {
-            console.log(res);
+            console.err(res);
         }
     }
 
