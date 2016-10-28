@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import {default as injectDefaultCookieStrategyForFetch} from './fetch-with-cookies';
+import {default as injectDefaultCookiePolicyForFetch} from './fetch-with-cookies';
 import {default as ImagePanelComponent} from './ImagePanelComponent';
 import {default as GoogleMapsComponent} from './GoogleMapsComponent';
 import {default as StreetViewComponent} from './StreetViewComponent';
@@ -28,7 +28,7 @@ class App extends Component {
         // http://stackoverflow.com/a/34015469/988941
         injectTapEventPlugin();
 
-        injectDefaultCookieStrategyForFetch('same-origin');
+        injectDefaultCookiePolicyForFetch('same-origin');
     }
 
     handleItemSelect(selectedItem) {
