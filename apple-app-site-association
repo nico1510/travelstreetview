@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "ABCD1234.org.reactjs.native.example.TravelStreetview",
+                "paths": [ "*" ]
+            }
+        ]
+    }
+}
