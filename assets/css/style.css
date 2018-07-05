@@ -120,7 +120,7 @@ section { overflow: hidden; }
 .bg-blue{background-color:#00C58B;}
 .bg-mega{background-color:#1b1b1b;}
 .bg-grey{background-color: #f5f5f5;}
-.bg-black{background-color: #222222;}
+.bg-black{background-color: #080808;}
 .bg-white{background-color: #fff;}
 
 img {
@@ -872,11 +872,11 @@ Nav Menu style
 }
 
 nav.navbar.bootsnav ul.nav li.active > a{
-    color:#00C58B;
+    color:white;
 }
 
 nav.navbar.bootsnav ul.nav li a:hover{
-    color:#00C58B;
+    color:white;
 }
 .navbar-nav > li > a {
     padding-top: 25px;
@@ -914,7 +914,7 @@ Home Section style
     bottom:0;
     width: 0;
     height: 0;
-    border-bottom: 140px solid #f5f5f5;
+    border-bottom: 140px solid rgba(0,0,0,0.8);
     border-right: 690px solid transparent;
 }
 
@@ -925,7 +925,7 @@ Home Section style
     bottom:0;
     width: 0;
     height: 0;
-    border-bottom: 140px solid #f5f5f5;
+    border-bottom: 140px solid rgba(0,0,0,0.8);
     border-left: 690px solid transparent;
 }
 
@@ -949,12 +949,12 @@ Featured section style
 }
 .features_item .f_item_icon i{
     font-size: 1.5rem;
-    color: #454545;
+    color: #00C58B;
     width: 50px;
     height: 50px;
     text-align: center;
     line-height: 50px;
-    border: 1px solid #454545;
+    border: 1px solid #00C58B;
     display: inline-block;
     border-radius: 50%;
     -webkit-transition: all 0.5s;
@@ -966,16 +966,53 @@ Featured section style
 }
 .features_item .f_item_text p{
     font-size:14px;
+    color: #d2d2d2;
+}
+.features_item .f_item_text h3{
+    font-size:14px;
+    color: #00C58B;
 }
 .features_item:hover .f_item_icon i{
-    background-color: #2c82c9;
-    border-color:#2c82c9;
+    background-color: black;
+    border-color:white;
     color:#fff;
 }
 .features_item:hover .f_item_text h3{
-    color:#2c82c9;
+    color:white;
 }
 
+.policy {
+    position: relative;
+    z-index: 2;
+    opacity: 0.9;
+    border-radius: 10px;
+    padding: 20px !important;
+    margin-bottom: 50px;
+    background: rgba(0,0,0,0.9);
+}
+
+.policy a {
+    color: #00C58B;
+}
+
+.policy-container {
+    min-height: 100vh;
+    padding-top: 180px;
+}
+
+.policy-container p {
+    color: white;
+    margin: 0 10px;
+}
+
+.policy-container h3, .policy-container h2 {
+    color: #00C58B;
+}
+
+.policy-container h3 {
+    margin-top: 15px;
+    padding: 10px;
+}
 
 /*dialogue section style*/
 
@@ -1148,7 +1185,7 @@ work Section style
     transition: all 0.6s;
 }
 .main_team .team_socail li a:hover i{
-    color:#2c82c9;
+    color:#00C58B;
 }
 .main_team .carousel-indicators{
     bottom:-40px;
@@ -1158,7 +1195,7 @@ work Section style
     background-color: #c1c1c1;
 }
 .main_team .carousel-indicators .active{
-    background-color: #2c82c9;
+    background-color: #00C58B;
 }
 
 /* Skill bar*/
@@ -1183,7 +1220,7 @@ work Section style
 .teamskillbar-bar {
     height:3px;
     width:0px;
-    background:#2c82c9;
+    background:#00C58B;
     position: absolute;
     left:0px;
     top:0px;

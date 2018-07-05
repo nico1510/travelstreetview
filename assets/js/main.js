@@ -14,6 +14,13 @@ jQuery(document).ready(function ($) {
     $('#navbar-menu').find('a[href*=#]:not([href=#])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);
+            var hash = this.hash;
+            $.find('#home, #features, #product').forEach(function (section) {
+                hash === "#privacy" ? $(section).hide() : $(section).show();
+            });
+            $.find('#privacy').forEach(function (section) {
+                hash === "#privacy" ? $(section).show() : $(section).hide();
+            });
             target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
             if (target.length) {
                 $('html,body').animate({
@@ -52,23 +59,6 @@ jQuery(document).ready(function ($) {
     });
 
 
-
-// slick slider active Home Page Tow
-//    $(".hello_slid").slick({
-//        dots: true,
-//        infinite: false,
-//        slidesToShow: 1,
-//        slidesToScroll: 1,
-//        arrows: true,
-//        prevArrow: "<i class='icon icon-chevron-left nextprevleft'></i>",
-//        nextArrow: "<i class='icon icon-chevron-right nextprevright'></i>",
-//        autoplay: true,
-//        autoplaySpeed: 2000
-//    });
-
-
-
-
 //---------------------------------------------
 // Scroll Up 
 //---------------------------------------------
@@ -78,20 +68,7 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-
-
-
-
-//Team Skillbar active js
-
-    jQuery('.teamskillbar').each(function () {
-        jQuery(this).find('.teamskillbar-bar').animate({
-            width: jQuery(this).attr('data-percent')
-        }, 6000);
-    });
-
-
-
+    if (location.hash) $(`a[href$="${location.hash}"]`).trigger('click');
 
 
     //End

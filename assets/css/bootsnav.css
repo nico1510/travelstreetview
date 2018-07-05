@@ -1462,11 +1462,21 @@ body.on-side .wrap-sticky nav.navbar.bootsnav.sticked{
         padding-top: 15px !important;
         padding-bottom: 15px !important;
     }
+
+    .logo {
+        position: relative;
+        left: 30px;
+    }
 }
 
 @media (min-width: 480px) and (max-width: 640px) {
     nav.bootsnav.navbar-full ul.nav{
         padding-top: 30px;
         padding-bottom: 30px;
+    }
+
+    .logo {
+        position: relative;
+        left: 30px;
     }
 }
