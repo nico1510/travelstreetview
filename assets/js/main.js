@@ -7,6 +7,14 @@ jQuery(document).ready(function ($) {
         $("#loading").fadeOut(500);
     });
 
+    var counter = 0;
+    setInterval(() => {
+        $("#image").fadeTo(1000,0.30, function() {
+            $("#image").attr("src",'assets/images/hello-phone' + counter % 3 + '.png');
+        }).fadeTo(500,1);
+        counter++;
+    }, 4000);
+
 
     /*---------------------------------------------*
      * Mobile menu
